@@ -1,6 +1,9 @@
 import { WidgetRoot } from './widget/WidgetRoot';
 import { WidgetProvider } from './widget/WidgetContext';
-import type { AmqurWidgetConfig, WidgetBootstrapResult } from './widget/types';
+import type {
+    AmqurWidgetConfig,
+    WidgetBootstrapResult,
+} from './widget/types';
 
 type Props = {
     config: AmqurWidgetConfig;

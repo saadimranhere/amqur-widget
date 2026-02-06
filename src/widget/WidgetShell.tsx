@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BubbleButton } from './BubbleButton';
+import { LauncherButton } from './components/LauncherButton';
 import { WidgetPanel } from './WidgetPanel';
 
 export function WidgetShell() {
@@ -7,8 +7,8 @@ export function WidgetShell() {
 
     return (
         <>
-            <BubbleButton onClick={() => setOpen(!open)} />
-            <WidgetPanel open={open} />
+            <LauncherButton open={open} onToggle={() => setOpen(v => !v)} />
+            <WidgetPanel open={open} onClose={() => setOpen(false)} />
         </>
     );
 }

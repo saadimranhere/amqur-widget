@@ -7,32 +7,32 @@ import { bootstrapWidget } from './bootstrap';
 let mounted = false;
 
 export async function mountWidget(config: AmqurWidgetConfig) {
-    if (mounted) return;
-    mounted = true;
+  if (mounted) return;
+  mounted = true;
 
-    const host = document.createElement('div');
-    host.id = 'amqur-widget-root';
-    document.body.appendChild(host);
+  const host = document.createElement('div');
+  host.id = 'amqur-connect-root';
+  document.body.appendChild(host);
 
-    const shadow = host.attachShadow({ mode: 'open' });
+  const shadow = host.attachShadow({ mode: 'open' });
 
-    const container = document.createElement('div');
-    shadow.appendChild(container);
+  const container = document.createElement('div');
+  shadow.appendChild(container);
 
-    const style = document.createElement('style');
-    style.innerHTML = `
-    * {
+  const style = document.createElement('style');
+  style.textContent = `
+    *, *::before, *::after {
       box-sizing: border-box;
       font-family: system-ui, -apple-system, BlinkMacSystemFont;
     }
   `;
-    shadow.appendChild(style);
+  shadow.appendChild(style);
 
-    const bootstrap = await bootstrapWidget(config);
+  const bootstrap = await bootstrapWidget(config);
 
-    createRoot(container).render(
-        <React.StrictMode>
-            <App config={config} bootstrap={bootstrap} />
-        </React.StrictMode>
-    );
+  createRoot(container).render(
+    <React.StrictMode>
+      <App config={config} bootstrap={bootstrap} />
+    </React.StrictMode>
+  );
 }

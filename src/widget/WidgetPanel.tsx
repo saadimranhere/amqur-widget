@@ -1,43 +1,31 @@
 import { ChatView } from './ChatView';
-import { useWidget } from './WidgetContext';
+import { CloseIcon } from './icons';
 
-export function WidgetPanel({ open }: { open: boolean }) {
-    const { bootstrap } = useWidget();
+export function WidgetPanel({
+    open,
+    onClose,
+}: {
+    open: boolean;
+    onClose: () => void;
+}) {
+
+    if (!open) return null;
 
     return (
-        <div
-            style={{
-                position: 'fixed',
-                bottom: '100px',
-                right: '24px',
-                width: '360px',
-                height: '520px',
-                background: '#ffffff',
-                borderRadius: '16px',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
-                transform: open ? 'translateY(0)' : 'translateY(20px)',
-                opacity: open ? 1 : 0,
-                pointerEvents: open ? 'auto' : 'none',
-                transition: 'all 220ms ease',
-                zIndex: 999999,
-                display: 'flex',
-                flexDirection: 'column',
-                overflow: 'hidden',
-            }}
-        >
-            <div
-                style={{
-                    padding: '16px',
-                    borderBottom: '1px solid #eee',
-                    fontWeight: 600,
-                    fontSize: '14px',
-                    background: '#fff',
-                }}
-            >
-                {bootstrap.tenantName}
+        <div className="amqur-panel">
+            <div className="amqur-header">
+                <div className="amqur-header-left" />
+                <div className="amqur-header-spacer" />
+                <button className="amqur-iconbtn" onClick={onClose} aria-label="Close">
+                    <CloseIcon />
+                </button>
             </div>
 
-            <div style={{ flex: 1 }}>
+            <div className="amqur-body">
+                <div className="amqur-prompt">
+                    What would you like to know?
+                </div>
+
                 <ChatView />
             </div>
         </div>
