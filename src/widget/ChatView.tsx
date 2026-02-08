@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { sendChatMessage } from './api/chat.api';
 import { useWidget } from './WidgetContext';
+import { getWidgetConfig } from '../connect';
 
 type Message = {
     role: 'user' | 'assistant';
@@ -37,12 +38,15 @@ export function ChatView() {
         setSending(true);
 
         try {
+            const liveConfig = getWidgetConfig();
+
             const data = await sendChatMessage({
-                apiBaseUrl: config.apiBaseUrl,
-                jwtToken: config.jwtToken,
+                apiBaseUrl: liveConfig.apiBaseUrl,
+                jwtToken: liveConfig.jwtToken,
                 message: userText,
                 conversationId,
             });
+
 
             if (data.type === 'vehicle_carousel') {
                 setMessages(prev => [
