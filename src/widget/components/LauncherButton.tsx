@@ -1,4 +1,3 @@
-import React from "react";
 import { EnvoyMark } from "../icons";
 
 export function LauncherButton(props: { open: boolean; onToggle: () => void }) {

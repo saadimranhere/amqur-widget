@@ -1,14 +1,19 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
+  plugins: [react()],
+
+  define: {
+    "process.env": {}, // <-- fixes "process is not defined"
+  },
+
   build: {
     lib: {
-      entry: 'src/main.tsx',
-      name: 'AmqurWidget',
-      fileName: () => 'amqur-widget.js',
-      formats: ['iife'],
+      entry: "src/embed.tsx",
+      name: "AMQUR",
+      fileName: "amqur-widget",
+      formats: ["iife"],
     },
-    cssCodeSplit: false,
-    emptyOutDir: true,
   },
 });

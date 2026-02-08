@@ -11,6 +11,7 @@ type Message = {
 export function ChatView() {
     const { config, bootstrap, conversationId } = useWidget();
 
+
     const [messages, setMessages] = useState<Message[]>([
         {
             role: 'assistant',
