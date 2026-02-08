@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { sendChatMessage } from './api/chat.api';
 import { useWidget } from './WidgetContext';
-import { getWidgetConfig } from '../connect';
+import { getWidgetConfig, getConversationId } from '../connect';
 
 type Message = {
     role: 'user' | 'assistant';
@@ -10,13 +10,16 @@ type Message = {
 };
 
 export function ChatView() {
-    const { config, bootstrap, conversationId } = useWidget();
+    const { bootstrap } = useWidget();
+
+    const config = getWidgetConfig();
+    const conversationId = getConversationId();
 
 
     const [messages, setMessages] = useState<Message[]>([
         {
             role: 'assistant',
-            text: `Welcome to ${bootstrap.tenantName}. How can I help you today?`,
+            text: `Welcome to ${bootstrap.location.name}. How can I help you today?`,
         },
     ]);
 
@@ -46,7 +49,6 @@ export function ChatView() {
                 message: userText,
                 conversationId,
             });
-
 
             if (data.type === 'vehicle_carousel') {
                 setMessages(prev => [

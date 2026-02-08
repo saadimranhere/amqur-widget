@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import type { AmqurWidgetConfig, WidgetBootstrapResult } from './types';
+import { getWidgetBootstrap, getWidgetConfig } from '../connect';
 
 const STORAGE_KEY = 'amqur_conversation_id';
 
@@ -15,23 +16,18 @@ function getConversationId(): string {
 type WidgetContextValue = {
     config: AmqurWidgetConfig;
     bootstrap: WidgetBootstrapResult;
-
     conversationId: string;
 };
 
 const WidgetContext = createContext<WidgetContextValue | null>(null);
 
-export function WidgetProvider({
-    config,
-    bootstrap,
-    children,
-}: {
-    config: AmqurWidgetConfig;
-    bootstrap: WidgetBootstrapResult;
-    children: React.ReactNode;
-}) {
-    // 🔐 conversation identity is created ONCE and persisted
+export function WidgetProvider({ children }: { children: React.ReactNode }) {
+    // 🔐 conversation identity persists across page reloads
     const [conversationId] = useState<string>(() => getConversationId());
+
+    // 🔑 pull runtime data from connect.ts singleton
+    const config = getWidgetConfig();
+    const bootstrap = getWidgetBootstrap();
 
     const value = useMemo(
         () => ({
